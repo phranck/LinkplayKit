@@ -4,3 +4,6 @@ The `LinkPlay` Swift package uses Apple's mDNS [`NetService`](https://developer.
 
 ### License
 This software is published under the [MIT License](https://phranck.mit-license.org).
+
+### Credits
+The package was developed by [Frank Gregor](https://woodbytes.me).
