@@ -12,11 +12,9 @@ let package = Package(
     products: [
         .library(name: "LinkPlay", targets: ["LinkPlay"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", .upToNextMajor(from: "1.9.0")),
-    ],
+    dependencies: [],
     targets: [
-        .target(name: "LinkPlay", dependencies: ["SwiftyBeaver"], path: "Sources")
+        .target(name: "LinkPlay", dependencies: [], path: "Sources")
     ],
     swiftLanguageVersions: [.v5]
 )

@@ -27,7 +27,6 @@ import Foundation
 extension LinkPlay: NetServiceBrowserDelegate {
 
     public func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
-        log.debug("\(service.description)")
         services.insert(service)
         service.delegate = self
         service.startMonitoring()
@@ -36,7 +35,6 @@ extension LinkPlay: NetServiceBrowserDelegate {
     }
     
     public func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
-        log.debug("\(service.description)")
         services.remove(service)
     }
     

@@ -24,9 +24,6 @@
 
 import Foundation
 import SwiftUI
-import SwiftyBeaver
-
-let log = SwiftyBeaver.self
 
 public class LinkPlay: NSObject, ObservableObject {
     
