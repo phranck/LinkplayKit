@@ -10,10 +10,10 @@ let package = Package(
         .macOS(.v10_15)
     ],
     products: [
-        .library(name: "LinkplayKit", targets: ["LinkplayKit"]),
+        .library(name: "LinkplayKit", targets: ["LinkplayKit"])
     ],
     dependencies: [
-        .package(name: "SwiftyBeaver", url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", from: "1.9.0"),
+        .package(name: "SwiftyBeaver", url: "https://github.com/SwiftyBeaver/SwiftyBeaver.git", from: "1.9.0")
     ],
     targets: [
         .target(
@@ -23,7 +23,7 @@ let package = Package(
         ),
         .testTarget(
             name: "LinkplayKitTests",
-            dependencies: ["LinkplayKit"]),
+            dependencies: ["LinkplayKit"])
     ],
     swiftLanguageVersions: [.v5]
 )
