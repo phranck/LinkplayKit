@@ -1,10 +1,11 @@
-name: LinkplayKit Build & Test
+name: LinkplayKit CI
 
 on:
   push:
     branches: [ develop, main ]
   pull_request:
-    branches: [ develop, main ]
+    branches:
+      - '*'
 
 jobs:
   build:
@@ -13,8 +14,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Lint
-      run: swiftlint
     - name: Build for iOS
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build-for-testing -scheme LinkplayKit -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
     - name: Run iOS tests
