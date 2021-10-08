@@ -57,9 +57,9 @@ public class LinkplayDevice: Identifiable, ObservableObject {
     }
 
     @objc private func updatePlayerInfo() {
-        if let api = self.api {
+//        if let api = self.api {
 //            _ = api.playerStatus(for: self)
-        }
+//        }
     }
 
 }
