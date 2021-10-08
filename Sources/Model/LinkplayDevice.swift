@@ -24,41 +24,50 @@
 
 import Foundation
 
-public class LinkPlayDevice: Identifiable, ObservableObject {
-    private let service: NetService
-    public let id: String?
-    
-    init(netService: NetService) {
-        self.service = netService
-        self.id = netService.macAddress
+public class LinkplayDevice: Identifiable, ObservableObject {
+    @Published public var volume: Int = 0 {
+        didSet {
+//            api?.setVolume(of: self, to: volume)
+        }
     }
+
+    private let service: NetService?
+    private var ipAddresses: [String] = []
+    private var updateTime: Timer?
+
+    public var id: String?
+    public var name: String
+    public var ipv4Address: String?
+    public var ipv6Address: String?
+    public var macAddress: String?
+    public var api: Linkplay?
     
-    public var name: String {
-        service.name
+    public init(netService: NetService, api: Linkplay) {
+        self.service     = netService
+        self.id          = netService.macAddress
+        self.name        = netService.name
+        self.macAddress  = netService.macAddress
+        self.ipAddresses = netService.ipAddresses
+        self.ipv4Address = ipAddresses.indices.contains(0) ? ipAddresses[0] : nil
+        self.ipv6Address = ipAddresses.indices.contains(1) ? ipAddresses[1] : nil
+
+        self.api = api
+
+        updateTime = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(updatePlayerInfo), userInfo: nil, repeats: true)
     }
-    
-    public var ipv4Address: String? {
-        return ipAddresses.indices.contains(0) ? ipAddresses[0] : nil
+
+    @objc private func updatePlayerInfo() {
+        if let api = self.api {
+//            _ = api.playerStatus(for: self)
+        }
     }
-    
-    public var ipv6Address: String? {
-        return ipAddresses.indices.contains(1) ? ipAddresses[1] : nil
-    }
-    
-    public var ipAddresses: [String] {
-        service.ipAddresses
-    }
-    
-    public var macAddress: String? {
-        service.macAddress
-    }
-    
+
 }
 
-// MARK: - Equatable
+// MARK: - Equatable 
 
-extension LinkPlayDevice: Equatable {
-    public static func == (lhs: LinkPlayDevice, rhs: LinkPlayDevice) -> Bool {
+extension LinkplayDevice: Equatable {
+    public static func == (lhs: LinkplayDevice, rhs: LinkplayDevice) -> Bool {
         if let lmac = lhs.macAddress, let rmac = rhs.macAddress {
             return lmac == rmac
         }
@@ -66,7 +75,7 @@ extension LinkPlayDevice: Equatable {
     }
 }
 
-extension LinkPlayDevice: Hashable {
+extension LinkplayDevice: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(macAddress)
     }
@@ -74,7 +83,7 @@ extension LinkPlayDevice: Hashable {
 
 // MARK: - Debugging
 
-extension LinkPlayDevice {
+extension LinkplayDevice {
     public var debugDescription: String {
         var desc: String = ""
 

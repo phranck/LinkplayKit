@@ -23,19 +23,24 @@
  */
 
 import Foundation
+import SwiftUI
 
-extension LinkPlay: NetServiceBrowserDelegate {
+public class Linkplay: NSObject, ObservableObject {
 
-    public func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
-        services.insert(service)
-        service.delegate = self
-        service.startMonitoring()
-        service.schedule(in: .main, forMode: .common)
-        service.resolve(withTimeout: 5)
-    }
+    private override init() {}
     
-    public func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
-        services.remove(service)
+    internal var browser: NetServiceBrowser?
+    internal var services: Set<NetService> = Set()
+
+    // MARK: - Public API
+
+    public static let shared = Linkplay()
+    
+    @Published public var devices: Set<LinkplayDevice> = []
+    @Published public var selectedDevice: LinkplayDevice?
+
+    public func isSelected(device: LinkplayDevice) -> Bool {
+        return selectedDevice == device
     }
     
 }
