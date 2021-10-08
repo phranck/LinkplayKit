@@ -20,7 +20,10 @@ let package = Package(
             name: "LinkplayKit",
             dependencies: ["SwiftyBeaver"],
             path: "Sources"
-        )
+        ),
+        .testTarget(
+            name: "LinkplayKitTests",
+            dependencies: ["LinkplayKit"]),
     ],
     swiftLanguageVersions: [.v5]
 )
