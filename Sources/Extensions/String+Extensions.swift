@@ -36,21 +36,21 @@ extension String {
         }
         return nil
     }
-    
+
     public var hexStringFromASCII: String? {
         if let data = self.data(using: .utf8) {
             return data.hexString
         }
         return nil
     }
-    
+
     public var dataFromHexString: Data? {
         let length = self.count / 2
         var data = Data(capacity: length)
         for idx in 0 ..< length {
             let startIndex = self.index(self.startIndex, offsetBy: idx * 2)
-            let k = self.index(startIndex, offsetBy: 2)
-            let bytes = self[startIndex..<k]
+            let offsetIndex = self.index(startIndex, offsetBy: 2)
+            let bytes = self[startIndex..<offsetIndex]
             if var byte = UInt8(bytes, radix: 16) {
                 data.append(&byte, count: 1)
             } else {
