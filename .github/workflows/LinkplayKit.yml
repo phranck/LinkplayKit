@@ -19,6 +19,5 @@ jobs:
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild test-without-building -scheme LinkplayKit -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
     - name: Build for macOS
       run: swift build
-    - name: Tests for macOS
+    - name: Run macOS tests
       run: swift test
-      
