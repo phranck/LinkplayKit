@@ -28,7 +28,7 @@ import SwiftUI
 public class Linkplay: NSObject, ObservableObject {
     var text = "Hello, World!"
 
-    private override init() {}
+    public override init() {}
     
     internal var browser: NetServiceBrowser?
     internal var services: Set<NetService> = Set()
