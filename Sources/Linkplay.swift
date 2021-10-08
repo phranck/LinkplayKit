@@ -26,6 +26,7 @@ import Foundation
 import SwiftUI
 
 public class Linkplay: NSObject, ObservableObject {
+    var text = "Hello, World!"
 
     private override init() {}
     
