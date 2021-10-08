@@ -1,3 +1,5 @@
+[![LinkplayKit Tests](https://github.com/phranck/LinkplayKit/actions/workflows/LinkplayKit.yml/badge.svg)](https://github.com/phranck/LinkplayKit/actions/workflows/LinkplayKit.yml)
+
 # LinkplayKit
 
 The `LinkplayKit` is an SDK for your Linkplay Home Audio solution. You can use it to implement you own music experience on both iOS and macOS.
