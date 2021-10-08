@@ -9,13 +9,16 @@ on:
 
 jobs:
   build:
-
     runs-on: macOS-latest
-
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
     - name: Build for iOS
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build-for-testing -scheme LinkplayKit -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
     - name: Run iOS tests
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild test-without-building -scheme LinkplayKit -destination "platform=iOS Simulator,OS=latest,name=iPhone 12" | xcpretty
+    - name: Build for macOS
+      run: swift build
+    - name: Tests for macOS
+      run: swift test
       
