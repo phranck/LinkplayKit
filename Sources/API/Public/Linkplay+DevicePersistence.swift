@@ -27,13 +27,12 @@ import Foundation
 extension Linkplay {
 
     public func createOrUpdateDevice(forService service: NetService) {
-        let newDevice = LinkplayDevice(netService: service, api: self)
-        newDevice.api = self
+        let newDevice = LinkplayDevice(netService: service)
         devices.update(with: newDevice)
     }
 
     public func device(forService service: NetService) -> LinkplayDevice? {
-        let searchDevice = LinkplayDevice(netService: service, api: self)
+        let searchDevice = LinkplayDevice(netService: service)
         let result = devices.filter { device in
             return device == searchDevice
         }

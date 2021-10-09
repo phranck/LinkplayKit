@@ -64,12 +64,12 @@ extension Linkplay: NetServiceDelegate {
     }
 
     public func netService(_ service: NetService, didUpdateTXTRecord data: Data) {
-        print("netService:didUpdateTXTRecord: \(service.debugDescription)")
+        log.debug("netService:didUpdateTXTRecord: \(service.debugDescription)")
 //        createOrUpdateDevice(forService: service)
     }
 
     public func netServiceDidResolveAddress(_ service: NetService) {
-        print("netServiceDidResolveAddress: \(service.debugDescription)")
+        log.debug("netServiceDidResolveAddress: \(service.debugDescription)")
         createOrUpdateDevice(forService: service)
     }
 

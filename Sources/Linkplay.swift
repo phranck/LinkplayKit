@@ -24,6 +24,8 @@
 
 import Foundation
 import SwiftUI
+import SwiftyBeaver
+let log = SwiftyBeaver.self
 
 public class Linkplay: NSObject, ObservableObject {
     public static let version = "0.1.0"

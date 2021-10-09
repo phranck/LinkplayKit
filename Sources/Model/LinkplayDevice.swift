@@ -24,7 +24,7 @@
 
 import Foundation
 
-public class LinkplayDevice: Identifiable, ObservableObject {
+public final class LinkplayDevice: Decodable, Identifiable, ObservableObject {
     @Published public var volume: Int = 0 {
         didSet {
 //            api?.setVolume(of: self, to: volume)
@@ -33,16 +33,14 @@ public class LinkplayDevice: Identifiable, ObservableObject {
 
     private let service: NetService?
     private var ipAddresses: [String] = []
-    private var updateTime: Timer?
 
     public var id: String?
     public var name: String
     public var ipv4Address: String?
     public var ipv6Address: String?
     public var macAddress: String?
-    public var api: Linkplay?
-    
-    public init(netService: NetService, api: Linkplay) {
+
+    required public init(netService: NetService) {
         self.service     = netService
         self.id          = netService.macAddress
         self.name        = netService.name
@@ -50,10 +48,31 @@ public class LinkplayDevice: Identifiable, ObservableObject {
         self.ipAddresses = netService.ipAddresses
         self.ipv4Address = ipAddresses.indices.contains(0) ? ipAddresses[0] : nil
         self.ipv6Address = ipAddresses.indices.contains(1) ? ipAddresses[1] : nil
+    }
 
-        self.api = api
+    private enum CodingKeys: String, CodingKey {
+        case service
+        case id
+        case name
+        case macAddress
+        case ipAddresses
+        case ipv4Address
+        case ipv6Address
+    }
 
-        updateTime = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(updatePlayerInfo), userInfo: nil, repeats: true)
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        id = try container.decode(String.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        ipAddresses = try container.decode([String].self, forKey: .ipAddresses)
+        ipv4Address = try container.decode(String.self, forKey: .ipv4Address)
+        ipv6Address = try container.decode(String.self, forKey: .ipv6Address)
+        macAddress = try container.decode(String.self, forKey: .macAddress)
+
+        let serviceData = try container.decode(Data.self, forKey: .service)
+        let unarchivedService = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(serviceData) as? NetService
+        service = unarchivedService
     }
 
     @objc private func updatePlayerInfo() {
@@ -78,6 +97,25 @@ extension LinkplayDevice: Equatable {
 extension LinkplayDevice: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(macAddress)
+    }
+}
+
+// MARK: - Encodable
+
+extension LinkplayDevice: Encodable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(macAddress, forKey: .macAddress)
+        try container.encode(ipAddresses, forKey: .ipAddresses)
+        try container.encode(ipv4Address, forKey: .ipv4Address)
+        try container.encode(ipv6Address, forKey: .ipv6Address)
+
+        if let service = service {
+            try container.encode(NSKeyedArchiver.archivedData(withRootObject: service, requiringSecureCoding: false), forKey: .service)
+        }
     }
 }
 
