@@ -25,22 +25,21 @@
 import Foundation
 import SwiftUI
 import SwiftyBeaver
+
 let log = SwiftyBeaver.self
 
 public class Linkplay: NSObject, ObservableObject {
-    public static let version = "0.1.0"
-    public static let build = 1
+    internal static let version = "0.1.0"
+    internal static let build = 1
 
-    public override init() {}
-    
     internal var browser: NetServiceBrowser?
     internal var services: Set<NetService> = Set()
 
-    // MARK: - Public API
+    public override init() {}
 
-    public static let shared = Linkplay()
+    // MARK: - Public API
     
-    @Published public var devices: Set<LinkplayDevice> = []
+    @Published public internal(set) var devices: Set<LinkplayDevice> = []
     @Published public var selectedDevice: LinkplayDevice?
 
     public func isSelected(device: LinkplayDevice) -> Bool {
@@ -48,3 +47,4 @@ public class Linkplay: NSObject, ObservableObject {
     }
     
 }
+
