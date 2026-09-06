@@ -10,7 +10,7 @@ The `LinkplayKit` is an SDK for your Linkplay Home Audio solution. You can use i
 All Linkplay devices comes with an HTTP API to retrieve informations about its current status or to control the device. `LinkplayKit` provides a developer friendly Swift API. It wraps the complexity of the above mentioned HTTP API.
 
 ### License
-This software is published under the [MIT License](https://phranck.mit-license.org).
+This repository has been published under the [MIT](https://layered.mit-license.org) license.
 
 ### Credits
 The package was developed by [Frank Gregor](https://woodbytes.me).
